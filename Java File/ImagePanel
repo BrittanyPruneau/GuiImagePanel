@@ -1,0 +1,134 @@
+package guiImagePanel;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import balloon.BalloonPanel;
+
+public class ImagePanel extends JPanel
+{
+
+	private Color[] colors = {Color.ORANGE, Color.BLUE, Color.RED};
+	String[] images = {"/balloon/Images/balloon20.jpg", "/balloon/Images/balloon40.jpg", 
+			"/balloon/Images/balloon60.jpg", "/balloon/Images/balloon80.jpg", "/balloon/Images/balloon100.jpg"}; 
+	private int colorIndex = 0;
+	private int imageIndex = 0;
+	
+	private int x = 50;
+	private int y = 90;
+	private int i=0; 
+	private JLabel lblBalloon;
+	private ImageIcon icon2 = new ImageIcon(
+			ImagePanel.class.getResource("/balloon/Images/balloon100.jpg"));
+
+	
+	public ImagePanel()
+	{
+		lblBalloon = createLabelBalloon();
+		add(lblBalloon, BorderLayout.CENTER);
+	}
+
+	private JLabel createLabelBalloon()
+	{
+		JLabel lblBalloon = new JLabel("");
+		//lblBalloon.setBackground(Color.BLACK);
+		//lblBalloon.setOpaque(true);
+		//lblBalloon.setIcon(getBalloonIcon());    // remember we did this. 
+		//lblBalloon.setHorizontalAlignment(SwingConstants.CENTER);
+		return lblBalloon;
+	}
+	
+	private int getBalloonIndex()
+	{
+		
+		imageIndex = ++imageIndex % images.length; 
+		
+		//return new ImageIcon(ImagePanel.class.getResource(images[imageIndex])); 
+		return imageIndex;
+		
+	}
+	
+	public void changeColor()    // then we create changeColors method 
+	{
+		colorIndex = ++colorIndex % colors.length;   // curiously we can increment colors and if the dividend is greater 
+													// than 1 it will result in the fraction that it is over 3/4, it goes back to 0 
+		setBackground(colors[colorIndex]);
+	}
+	
+	
+	public void updateImage()
+	{
+		//lblBalloon.setIcon(getBalloonIcon());
+		//every time you update an image. 
+		// the field is going to update your image in this particular paintComponent will update to a new image. 
+		
+		//this.icon2 = getBalloonIcon(); 
+		//this.newImage = getBalloonIcon(); 
+		i = this.i +1;
+		
+		if(i==0)
+		{
+			this.icon2 = new ImageIcon(
+					ImagePanel.class.getResource("/balloon/Images/balloon20.jpg"));
+			this.x = 1000;
+			this.x = 1000;
+		}
+		if(i==1)
+		{
+			this.icon2 = new ImageIcon(
+					ImagePanel.class.getResource("/balloon/Images/balloon40.jpg"));
+			this.x = 90;
+			this.x = 90;
+		}
+		if(i==2)
+		{
+			this.icon2 = new ImageIcon(
+					ImagePanel.class.getResource("/balloon/Images/balloon60.jpg"));
+			this.x = 70;
+			this.x = 70;
+		}
+		if(i==3)
+		{
+			this.icon2 = new ImageIcon(
+					ImagePanel.class.getResource("/balloon/Images/balloon80.jpg"));
+			this.x = 50;
+			this.x = 50;
+		}
+		if(i==4)
+		{
+			this.icon2 = new ImageIcon(
+					ImagePanel.class.getResource("/balloon/Images/balloon100.jpg"));
+			this.x = 30;
+			this.x = 30;
+		}
+		repaint();
+	}
+	
+	public void move()
+	{
+		x+= 10;     // x is where our icons location begins and every time we move 10 to right. 
+		repaint();    // repaint is a Swing method
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g)   // NOTICE GRAPHICS COMPONENT  g 
+	{
+		super.paintComponent(g);
+		
+		setBackground(colors[colorIndex]);      // then you've got to set background in paint components 
+
+		
+
+		this.icon2.paintIcon(this, g, x, y);    // now in order to see it, we need to call it in the    J Frame
+		
+
+	
+	}
+}
